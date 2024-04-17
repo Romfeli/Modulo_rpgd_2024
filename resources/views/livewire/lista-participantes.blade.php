@@ -1,7 +1,7 @@
 <div class="p-4 bg-gray-900 text-black">
     {{-- Because she competes with no one, no one can compete with her. --}}
     <!-- resources/views/livewire/lista-participantes.blade.php -->
-    <button type="button" wire:click="toggleMostrarLista" >
+    <button  type="button" wire:click="toggleMostrarLista" >
         Ver participantes
     </button>
 

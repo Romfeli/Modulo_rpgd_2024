@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Livewire;
-use Illuminate\Http\Request;
 
 use Livewire\Component;
 use App\Models\Participante;
@@ -14,7 +13,7 @@ class AgregarFormulario extends Component
     public $phone_number;
     public $signatureBase64;
     public $successMessage;
-    public $showForm = false; // Define y asigna un valor inicial a $showForm
+    public $showForm = false; 
 
     protected $rules = [
         'dni' => 'required|digits:8',
@@ -34,26 +33,12 @@ class AgregarFormulario extends Component
         $this->showForm = true;
     }
 
-    public function toggleSignatureSection()
-    {
-        $this->validate();
-
-        // Emitir un evento hacia JavaScript para mostrar la sección de firma
-        $this->dispatch('openSignatureModal');
-    }
-
     public function saveData()
     {
-        $this->validate();
+        $validatedData = $this->validate();
 
         // Guardar datos en la base de datos
-        Participante::create([
-            'dni' => $this->dni,
-            'name_and_last_name' => $this->name_and_last_name,
-            'email' => $this->email,
-            'phone_number' => $this->phone_number,
-            'signature_base64' => $this->signatureBase64,
-        ]);
+        Participante::create($validatedData);
 
         // Reiniciar el formulario y mostrar mensaje de éxito
         $this->resetForm();
@@ -62,10 +47,6 @@ class AgregarFormulario extends Component
 
     public function resetForm()
     {
-        $this->dni = '';
-        $this->name_and_last_name = '';
-        $this->email = '';
-        $this->phone_number = '';
-        $this->signatureBase64 = '';
+        $this->reset(['dni', 'name_and_last_name', 'email', 'phone_number', 'signatureBase64']);
     }
 }
