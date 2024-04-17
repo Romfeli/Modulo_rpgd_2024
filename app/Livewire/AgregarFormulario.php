@@ -18,7 +18,7 @@ class AgregarFormulario extends Component
     protected $rules = [
         'dni' => 'required|digits:8',
         'name_and_last_name' => 'required|string',
-        'email' => 'required|email',
+        'email' => 'required|email|unique:participantes,email',
         'phone_number' => 'required|string',
     ];
 
