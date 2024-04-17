@@ -13,7 +13,7 @@ class AgregarFormulario extends Component
     public $phone_number;
     public $signatureBase64;
     public $successMessage;
-    public $showForm = false; 
+    public $showForm = false;
 
     protected $rules = [
         'dni' => 'required|digits:8',
@@ -30,23 +30,48 @@ class AgregarFormulario extends Component
     public function validateDni()
     {
         $this->validate(['dni' => 'required|digits:8']);
-        $this->showForm = true;
+
+        // Verificar si existe un participante con el DNI proporcionado
+        $participante = Participante::where('dni', $this->dni)->latest()->first();
+
+        if ($participante) {
+            // Si se encuentra un participante, cargar sus datos en el formulario
+            $this->name_and_last_name = $participante->name_and_last_name;
+            $this->email = $participante->email;
+            $this->phone_number = $participante->phone_number;
+
+            // Mostrar el formulario
+            $this->showForm = true;
+        } else {
+           
+        }
     }
 
     public function saveData()
     {
-        $validatedData = $this->validate();
+        $this->validate();
 
         // Guardar datos en la base de datos
-        Participante::create($validatedData);
+        Participante::create([
+            'dni' => $this->dni,
+            'name_and_last_name' => $this->name_and_last_name,
+            'email' => $this->email,
+            'phone_number' => $this->phone_number,
+            // Aquí puedes agregar cualquier otro campo que necesites crear
+        ]);
 
-        // Reiniciar el formulario y mostrar mensaje de éxito
+        // Reiniciar el formulario después de guardar los datos
         $this->resetForm();
         $this->successMessage = 'Los datos se han guardado correctamente.';
     }
 
     public function resetForm()
     {
-        $this->reset(['dni', 'name_and_last_name', 'email', 'phone_number', 'signatureBase64']);
+        $this->dni = '';
+        $this->name_and_last_name = '';
+        $this->email = '';
+        $this->phone_number = '';
+        $this->signatureBase64 = '';
+        $this->showForm = false;
     }
 }

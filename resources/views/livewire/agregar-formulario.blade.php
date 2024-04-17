@@ -1,5 +1,6 @@
 <!-- Blade (Componente Livewire) -->
 <div>
+    
     <input type="text" wire:model="dni" />
     <button wire:click="validateDni">Validar DNI</button>
     @error('dni') <span class="error">{{ $message }}</span> @enderror
@@ -22,4 +23,5 @@
     @if ($successMessage)
         <div class="success">{{ $successMessage }}</div>
     @endif
+
 </div>
