@@ -1,4 +1,4 @@
-<div class="p-4 bg-gray-900 text-black">
+<div class="p-4 bg-white-900 text-black">
     {{-- Because she competes with no one, no one can compete with her. --}}
     <!-- resources/views/livewire/lista-participantes.blade.php -->
     <button  type="button" wire:click="toggleMostrarLista" >
@@ -12,7 +12,7 @@
                     <table class="min-w-full divide-y divide-gray-200 bg-black shadow-md rounded-lg overflow-hidden">
                     <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">ID</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombres y apellidos</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha de Creación</th>
