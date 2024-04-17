@@ -43,7 +43,8 @@ class AgregarFormulario extends Component
             // Mostrar el formulario
             $this->showForm = true;
         } else {
-           
+            $this->showForm = true;
+
         }
     }
 
@@ -64,6 +65,12 @@ class AgregarFormulario extends Component
         $this->resetForm();
         $this->successMessage = 'Los datos se han guardado correctamente.';
     }
+
+    private function getSignatureBase64()
+{
+    // Obtener la imagen en formato base64 desde el canvas de SignaturePad
+    return $this->signaturePad->toDataURL();
+}
 
     public function resetForm()
     {

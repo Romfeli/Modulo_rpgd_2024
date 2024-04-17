@@ -16,6 +16,12 @@
 
             <input type="text" wire:model="phone_number" placeholder="Teléfono" />
             @error('phone_number') <span class="error">{{ $message }}</span> @enderror
+
+
+            <div id="signature-pad" class="signature-pad">
+                <canvas id="signature-canvas" width="400" height="200"></canvas>
+            </div>
+
             <button type="submit">Firmar y Enviar</button>
         </form>
     @endif
