@@ -11,15 +11,16 @@ class AgregarFormulario extends Component
     public $name_and_last_name;
     public $email;
     public $phone_number;
-    public $signatureBase64;
     public $successMessage;
     public $showForm = false;
+    public $signatureBase64;
 
     protected $rules = [
         'dni' => 'required|digits:8',
         'name_and_last_name' => 'required|string',
         'email' => 'required|email|unique:participantes,email',
         'phone_number' => 'required|string',
+        'signatureBase64' => 'required|string', // Agrega regla de validación para la firma
     ];
 
     public function render()
@@ -44,7 +45,6 @@ class AgregarFormulario extends Component
             $this->showForm = true;
         } else {
             $this->showForm = true;
-
         }
     }
 
@@ -58,7 +58,7 @@ class AgregarFormulario extends Component
             'name_and_last_name' => $this->name_and_last_name,
             'email' => $this->email,
             'phone_number' => $this->phone_number,
-            // Aquí puedes agregar cualquier otro campo que necesites crear
+            'signatureBase64' => $this->signatureBase64,
         ]);
 
         // Reiniciar el formulario después de guardar los datos
@@ -66,19 +66,17 @@ class AgregarFormulario extends Component
         $this->successMessage = 'Los datos se han guardado correctamente.';
     }
 
-    private function getSignatureBase64()
-{
-    // Obtener la imagen en formato base64 desde el canvas de SignaturePad
-    return $this->signaturePad->toDataURL();
-}
-
     public function resetForm()
     {
         $this->dni = '';
         $this->name_and_last_name = '';
         $this->email = '';
         $this->phone_number = '';
-        $this->signatureBase64 = '';
         $this->showForm = false;
+    }
+
+    public function showSignatureModal()
+    {
+        $this->dispatchBrowserEvent('openSignatureModal');
     }
 }

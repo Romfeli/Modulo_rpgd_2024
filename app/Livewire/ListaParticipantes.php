@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 
-
 use App\Models\Participante;
 use Livewire\Component;
 

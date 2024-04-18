@@ -1,28 +1,26 @@
 <div>
-    <input type="text" wire:model="dni" />
+    <label for="dni">DNI</label>
+    <input type="text" id="dni" wire:model="dni" />
     <button wire:click="validateDni">Validar DNI</button>
     @error('dni') <span class="error">{{ $message }}</span> @enderror
 
     @if ($showForm)
-        <form wire:submit.prevent="saveData">
+        <form method="POST" id="formParticipant" wire:submit.prevent="saveData">
             <!-- Campos existentes -->
-            <input type="text" wire:model="name_and_last_name" placeholder="Nombre y Apellido" />
+            <label for="name_and_last_name">Nombre y Apellido</label>
+            <input type="text" id="name_and_last_name" wire:model="name_and_last_name" placeholder="Nombre y Apellido" />
             @error('name_and_last_name') <span class="error">{{ $message }}</span> @enderror
 
-            <input type="email" wire:model="email" placeholder="Email" />
+            <label for="email">Email</label>
+            <input type="email" id="email" wire:model="email" placeholder="Email" />
             @error('email') <span class="error">{{ $message }}</span> @enderror
 
-            <input type="text" wire:model="phone_number" placeholder="Teléfono" />
+            <label for="phone_number">Teléfono</label>
+            <input type="text" id="phone_number" wire:model="phone_number" placeholder="Teléfono" />
             @error('phone_number') <span class="error">{{ $message }}</span> @enderror
-
-            <div id="signature-pad" class="signature-pad">
-                <canvas id="signature-canvas" width="400" height="200"></canvas>
-            </div>
 
             <button type="button" onclick="showSignatureModal()">Firmar y Enviar</button>
 
-            <!-- Este botón estará oculto y se utilizará para enviar el formulario -->
-            <button type="submit" id="submitForm" style="display: none;"></button>
         </form>
     @endif
 
@@ -31,8 +29,8 @@
     @endif
 
     <script>
-
-        let signaturePad; // Variable global para almacenar la instancia de SignaturePad
+        let signaturePad;
+        let haComenzadoDibujo = false;
 
         function showSignatureModal() {
             Swal.fire({
@@ -63,10 +61,41 @@
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Enviamos el formulario al hacer clic en el botón oculto
-                    document.getElementById('submitForm').click();
+                    // Llamada a la función para manejar la firma y el envío del formulario
+                    handleSignatureAndShipping();
                 }
             });
+        }
+
+        async function handleSignatureAndShipping() {
+            try {
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+                const formData = new FormData(document.getElementById('formParticipant'));
+                formData.append('_token', csrfToken);
+
+                // Obtener la firma en formato base64
+                const canvas = document.getElementById('signatureCanvas');
+                const signatureBase64 = canvas.toDataURL();
+
+                // Agregar la firma al formulario
+                formData.append('signatureBase64', signatureBase64);
+                
+                const response = await fetch('/guardar-datos', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error en la solicitud: ' + response.statusText);
+                }
+
+                const data = await response.json();
+                console.log('Respuesta del servidor:', data);
+                // Aquí puedes manejar la respuesta del servidor, como mostrar un mensaje de éxito, etc.
+            } catch (error) {
+                console.error('Error al enviar el formulario:', error);
+                // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario, etc.
+            }
         }
     </script>
 </div>
