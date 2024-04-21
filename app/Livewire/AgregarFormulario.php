@@ -25,19 +25,23 @@ class AgregarFormulario extends Component
         return view('livewire.agregar-formulario');
     }
 
-    public function validateDni()
-{
+        public function validateDni()
+    {
 
-    $participante = Participante::where('dni', $this->dni)->latest()->first();
+        $this->validate([
+            'dni' => 'required|digits:8',
+        ]);
 
-    $this->showForm = true;
+        $participante = Participante::where('dni', $this->dni)->latest()->first();
 
-    if ($participante) {
-        $this->name_and_last_name = $participante->name_and_last_name;
-        $this->email = $participante->email;
-        $this->phone_number = $participante->phone_number;
+        $this->showForm = true;
+
+        if ($participante) {
+            $this->name_and_last_name = $participante->name_and_last_name;
+            $this->email = $participante->email;
+            $this->phone_number = $participante->phone_number;
+        }
     }
-}
 
     
 public function saveData(Request $request)
@@ -47,8 +51,8 @@ public function saveData(Request $request)
         $request->validate([
             'dni' => 'required|digits:8',
             'name_and_last_name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'phone_number' => 'required|string|max:20',
+            'email' => 'required|email|unique:participantes,email',
+            'phone_number' => ['required', 'regex:/^\+?\d+$/'],
             // Agrega más reglas de validación según sea necesario
         ]);
     

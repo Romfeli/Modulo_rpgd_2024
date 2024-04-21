@@ -9,7 +9,7 @@
     @if ($showForm)
     <!-- Aquí usamos wire:model para enlazar el valor del campo 'dni' al componente de Livewire -->
    
-    <form method="POST" id="formParticipante" onsubmit="return validateForm()" wire:submit.prevent="saveData">
+    <form method="POST" id="formParticipante"  wire:submit.prevent="saveData">
         @csrf
 
             <!-- Agrega el campo 'dni' dentro del formulario -->
@@ -27,7 +27,7 @@
             <input type="text" id="phone_number" wire:model="phone_number" placeholder="Teléfono" />
             @error('phone_number') <span class="error">{{ $message }}</span> @enderror
 
-            <button type="button" onsubmit="return validateForm()" onclick="showSignatureModal()">Firmar y Enviar</button>
+            <button type="button"  onclick="showSignatureModal()">Firmar y Enviar</button>
         </form>
     @endif
 
@@ -37,6 +37,28 @@
     @endif
 
     <script>
+        
+         function validateForm() {
+        // Validación básica en el frontend
+        const dni = document.getElementById('dni').value;
+        const name = document.getElementById('name_and_last_name').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone_number').value;
+
+        if (!dni || !name || !email || !phone) {
+            alert('Por favor, complete todos los campos.');
+            return false;
+        }
+
+        // Validación adicional, como verificar el formato del correo electrónico, longitud del teléfono, etc.
+
+        return true;
+    }
+
+
+
+
+
         let signaturePad;
         let haComenzadoDibujo = false;
     
@@ -79,22 +101,7 @@
         }
     
 
-        function validateForm() {
-        // Validación básica en el frontend
-        const dni = document.getElementById('dni').value;
-        const name = document.getElementById('name_and_last_name').value;
-        const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone_number').value;
-
-        if (!dni || !name || !email || !phone) {
-            alert('Por favor, complete todos los campos.');
-            return false;
-        }
-
-        // Validación adicional, como verificar el formato del correo electrónico, longitud del teléfono, etc.
-
-        return true;
-    }
+       
 
 
 
