@@ -1,0 +1,13 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+
+/* Agrega tus estilos personalizados aquí */
+
+
+/* Tu código personalizado y estilos aquí */
+
+[x-cloak] {
+    display: none;
+}
