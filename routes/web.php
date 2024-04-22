@@ -25,3 +25,4 @@ Route::get('/agregar-formulario', [AgregarFormulario::class, 'render']);
 Route::post('/validate-dni', [AgregarFormulario::class, 'validateDni']);
 Route::post('/agregar-formulario', [AgregarFormulario::class, 'saveData']);
 
+Route::get('/descargar-pdf', [DescargarPdfCsv::class, 'render']);

@@ -17,7 +17,7 @@
                         </div>
                         <div class="flex justify-between mt-4">
                             <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-150 ease-in-out">Descargar PDF</button>
-                            <button wire:click.prevent="downloadCSV" class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-150 ease-in-out">Descargar CSV</button>
+                            <button type="button" wire:click.prevent="downloadCSV" class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-150 ease-in-out">Descargar CSV</button>
                         </div>
                     </form>
                 </div>
