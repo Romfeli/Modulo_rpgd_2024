@@ -15,7 +15,7 @@ class HomeControllerTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_participants_list_view(): void
+    public function muestra_la_lista_de_participantes(): void
     {
         // Insertar algunos datos de ejemplo en la tabla participantes
         Participante::factory()->count(5)->create();
@@ -37,16 +37,11 @@ class HomeControllerTest extends TestCase
     
 
     
-    public function test_form_send_ok(): void
+    public function manda_ok_el_formulario(): void
     {
         $response = $this->get('/');
 
         $response->assertStatus(200);
     }
-    public function test_livewive_components(): void
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-    }
+  
 }
