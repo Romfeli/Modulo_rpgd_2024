@@ -17,6 +17,7 @@ class DescargarPdfCsv extends Component
         // Validar fechas
         $this->validate([
             'fechaInicio' => 'required|date',
+                                        //despues o igual a la fecha de inicio
             'fechaFin' => 'required|date|after_or_equal:fechaInicio',
         ]);
     

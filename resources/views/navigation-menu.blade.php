@@ -18,17 +18,20 @@
                     </button>
                 </div>
 
-                <!-- Mobile menu -->
+                <!-- Desktop menu -->
                 <div class="hidden sm:flex sm:items-center space-x-4">
-                    @guest
-                        <x-nav-link href="{{ route('login') }}">{{ __('Login') }}</x-nav-link>
-                        <x-nav-link href="{{ route('register') }}">{{ __('Register') }}</x-nav-link>
-                    @else
+                    @auth
+                        <!-- Mostrar opciones para usuarios autenticados -->
+                        <x-nav-link href="{{ route('buscador') }}">{{ __('Buscador') }}</x-nav-link>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <x-nav-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">{{ __('Logout') }}</x-nav-link>
                         </form>
-                    @endguest
+                    @else
+                        <!-- Mostrar opciones para usuarios no autenticados (guests) -->
+                        <x-nav-link href="{{ route('login') }}">{{ __('Login') }}</x-nav-link>
+                        <x-nav-link href="{{ route('register') }}">{{ __('Register') }}</x-nav-link>
+                    @endauth
                 </div>
             </div>
         </div>
@@ -36,14 +39,13 @@
         <!-- Responsive Navigation Menu -->
         <div x-show="open" class="sm:hidden">
             <div class="pt-2 pb-3 space-y-1">
+                <!-- Mostrar opciones para dispositivos móviles -->
                 <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">{{ __('Dashboard') }}</x-responsive-nav-link>
                 @guest
                     <x-responsive-nav-link href="{{ route('login') }}">{{ __('Login') }}</x-responsive-nav-link>
                     <x-responsive-nav-link href="{{ route('register') }}">{{ __('Register') }}</x-responsive-nav-link>
                 @else
-
-                    <x-responsive-nav-link href="{{ route('buscador') }}">{{ __('buscador') }}</x-responsive-nav-link>
-
+                    <x-responsive-nav-link href="{{ route('buscador') }}">{{ __('Buscador') }}</x-responsive-nav-link>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <x-nav-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">{{ __('Logout') }}</x-nav-link>

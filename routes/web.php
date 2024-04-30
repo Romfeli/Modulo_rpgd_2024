@@ -7,15 +7,17 @@ use App\Livewire\AgregarFormulario;
 use App\Livewire\ListaParticipantes;
 use App\Livewire\DescargarPdfCsv;
 use App\Livewire\BuscadorParticipante;
+use App\Livewire\Checkboxs;
+
+
+
+
+
 
 
 Route::get('/', function () {
     return view('welcome');
 });
-
-
-
-Route::post('/guardar-datos', [AgregarFormulario::class, 'saveData']);
 
 Route::middleware([
     'auth:sanctum',
@@ -30,9 +32,20 @@ Route::middleware([
     })->name('buscador');
 });
 
+Route::post('/guardar-datos', [AgregarFormulario::class, 'saveData']);
+
+
+
 Route::get('/agregar-formulario', [AgregarFormulario::class, 'render']);
 Route::post('/validate-dni', [AgregarFormulario::class, 'validateDni']);
 Route::post('/agregar-formulario', [AgregarFormulario::class, 'saveData']);
 
 Route::get('/descargar', [DescargarPdfCsv::class, 'descargarPdf']);
+
+
+Route::get('/checkboxs', Checkboxs::class)->name('checkboxs');
+
+Route::get('/update-checkboxs', function () {
+    return view('update-checkboxs');
+})->name('update-checkboxs');
 

@@ -26,6 +26,8 @@
                     <input type="text" id="phone_number" wire:model="phone_number" placeholder="Teléfono" class="w-full border-gray-300 rounded-md py-2 px-3 mb-4 focus:outline-none focus:ring focus:border-blue-300">
                     @error('phone_number') <span class="text-red-500">{{ $message }}</span> @enderror
     
+
+                    
                     <button type="button" onclick="showSignatureModal()" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md">Firmar y Enviar</button>
                 </form>
             @endif
@@ -129,5 +131,9 @@
         } catch (error) {
             console.error('Error al enviar el formulario:', error);
         }
+
+        
     }
+
+   
 </script>

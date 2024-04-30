@@ -1,10 +1,13 @@
 <div class="p-4 bg-white-900 text-black">
     {{-- Because she competes with no one, no one can compete with her. --}}
-    <!-- resources/views/livewire/lista-participantes.blade.php -->
-    <button  type="button" wire:click="toggleMostrarLista" >
-        Ver participantes
-    </button>
-
+    <div class="flex justify-center ">
+        <button type="button" wire:click="toggleMostrarLista" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Ver participantes
+        </button>
+    
+        
+    </div>
+    
     @if($mostrarLista)
     
     <h1 class="text-center py-10 ">Registros de hoy</h1>

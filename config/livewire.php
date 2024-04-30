@@ -102,7 +102,7 @@ return [
     |
     */
 
-    'legacy_model_binding' => false,
+    'legacy_model_binding' => true,
 
     /*
     |---------------------------------------------------------------------------
@@ -128,10 +128,8 @@ return [
     |
     */
 
-    'navigate' => [
-        'show_progress_bar' => true,
-        'progress_bar_color' => '#2299dd',
-    ],
+    'navigate' => false,
+
 
     /*
     |---------------------------------------------------------------------------
