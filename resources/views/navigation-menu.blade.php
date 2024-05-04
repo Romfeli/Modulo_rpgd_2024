@@ -23,7 +23,8 @@
                 <!-- Desktop menu -->
                 <div class="hidden sm:flex sm:items-center space-x-4">
                     @auth
-                        <!-- Mostrar opciones para usuarios autenticados -->                        
+                        <!-- Mostrar opciones para usuarios autenticados -->  
+                        <x-nav-link href="{{ route('dashboard') }}">{{ __('Home') }}</x-nav-link>
                         <x-nav-link href="{{ route('apariencia') }}">{{ __('Apariencia') }}</x-nav-link>
                         <x-nav-link href="{{ route('update-legal-text') }}">{{ __('Texto legal') }}</x-nav-link>
                         <x-nav-link href="{{ route('update-checkboxs') }}">{{ __('Checkboxes') }}</x-nav-link>
