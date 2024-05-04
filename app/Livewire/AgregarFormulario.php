@@ -12,8 +12,9 @@ class AgregarFormulario extends Component
     public $email;
     public $phone_number;
     public $successMessage;
-    public $showForm = false;
     public $signatureBase64;
+    public $showForm2 = false;
+    public $showForm = false;
 
     public function render()
     {
@@ -83,4 +84,17 @@ public function saveData(Request $request)
         $this->phone_number = '';
         $this->showForm = false;
     }
+
+
+
+    public function showFormulario()
+    {
+
+
+        $this->showForm2 = !$this->showForm2; // Invierte el valor de $showForm2
+
+    }
+  
+
+    
 }

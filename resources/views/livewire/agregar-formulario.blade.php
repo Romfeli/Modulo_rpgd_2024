@@ -1,15 +1,28 @@
 <div>
+    <!-- Botón "Ver Participante" -->
+    <div class="flex justify-center mb-4">
+        <button 
+            wire:click="showFormulario" 
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+            Agregar participante
+        </button>
+    </div>
+
+    @if ($showForm2)
     <div class="flex justify-center items-center h-screen">
-        <div class="w-96 bg-white p-8 rounded-lg shadow-md">
+        <div  class="w-96 bg-white p-8 rounded-lg shadow-md">
             <label for="dni" class="block mb-2">DNI</label>
             <input type="text" id="dni" wire:model="dni" class="w-full border-gray-300 rounded-md py-2 px-3 mb-4 focus:outline-none focus:ring focus:border-blue-300">
-    
+            
             <button wire:click="validateDni" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md mb-4">Validar DNI</button>
     
             @error('dni')
             <span class="text-red-500">{{ $message }}</span>
             @enderror
-    
+            @endif
+
+
             @if ($showForm)
                 <form id="formParticipante" wire:submit.prevent="saveData">
                     @csrf
