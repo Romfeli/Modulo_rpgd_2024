@@ -55,7 +55,12 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
         ],
-
+        'logos' => [
+            'driver' => 'local',
+            'root' => public_path('logos'), // Ruta donde se almacenarán los archivos
+            'url' => env('APP_URL').'/logos', // URL base para acceder a los archivos
+            'visibility' => 'public', // Visibilidad de los archivos almacenados
+        ],
     ],
 
     /*

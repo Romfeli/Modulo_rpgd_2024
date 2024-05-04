@@ -9,6 +9,8 @@ use App\Livewire\DescargarPdfCsv;
 use App\Livewire\BuscadorParticipante;
 use App\Livewire\Checkboxs;
 use App\Livewire\LegalText;
+use App\Livewire\LogoToggle;
+use App\Http\Controllers\AparienciaController;
 
 
 
@@ -41,6 +43,16 @@ Route::middleware([
         return view('update-legal-text');
     })->name('update-legal-text');
 
+    Route::get('/apariencia', function () {
+        return view('apariencia');
+    })->name('apariencia');
+
+
+
+
+    Route::post('/logo-toggle', [AparienciaController::class, 'toggleLogo'])->name('logo.toggle');
+    Route::get('/apariencia', [AparienciaController::class, 'index'])->name('apariencia');
+    Route::post('/logo-upload', [AparienciaController::class, 'uploadLogo'])->name('logo.upload');
 
     Route::get('/descargar', [DescargarPdfCsv::class, 'descargarPdf']);
 
