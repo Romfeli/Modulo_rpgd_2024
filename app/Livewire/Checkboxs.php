@@ -6,7 +6,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Checkbox;
 
-class Checkboxs extends Component
+class CheckBoxs extends Component
 {
     public $checkboxs;
 
@@ -24,7 +24,7 @@ class Checkboxs extends Component
     {
         $this->validate();
 
-        $checkbox = Checkbox::findOrFail($id);
+        $checkbox = CheckBox::findOrFail($id);
 
         // Actualizar los campos en el modelo Checkbox con los datos del formulario
         $checkbox->title = $this->checkboxs[0]['title'];

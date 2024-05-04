@@ -8,6 +8,7 @@ use App\Livewire\ListaParticipantes;
 use App\Livewire\DescargarPdfCsv;
 use App\Livewire\BuscadorParticipante;
 use App\Livewire\Checkboxs;
+use App\Livewire\LegalText;
 
 
 
@@ -30,22 +31,28 @@ Route::middleware([
     Route::get('/buscador', function () {
         return view('buscador');
     })->name('buscador');
-});
 
+    Route::get('/update-checkboxs', function () {
+        return view('update-checkboxs');
+    })->name('update-checkboxs');
+
+    
+    Route::get('/update-legal-text', function () {
+        return view('update-legal-text');
+    })->name('update-legal-text');
+
+
+    Route::get('/descargar', [DescargarPdfCsv::class, 'descargarPdf']);
+
+    
+}
+);
 Route::post('/guardar-datos', [AgregarFormulario::class, 'saveData']);
-
-
-
 Route::get('/agregar-formulario', [AgregarFormulario::class, 'render']);
 Route::post('/validate-dni', [AgregarFormulario::class, 'validateDni']);
 Route::post('/agregar-formulario', [AgregarFormulario::class, 'saveData']);
 
-Route::get('/descargar', [DescargarPdfCsv::class, 'descargarPdf']);
 
 
-Route::get('/checkboxs', Checkboxs::class)->name('checkboxs');
 
-Route::get('/update-checkboxs', function () {
-    return view('update-checkboxs');
-})->name('update-checkboxs');
 
