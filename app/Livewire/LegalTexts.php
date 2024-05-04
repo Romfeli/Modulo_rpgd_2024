@@ -26,8 +26,8 @@ class LegalTexts extends Component
         $legaltext = LegalText::findOrFail($id);
 
         // Update the legal text with the form data
-        $legaltext->title = $this->legaltexts[$id - 1]['title']; // Adjust index to match array index
-        $legaltext->content = $this->legaltexts[$id - 1]['content']; // Adjust index to match array index
+        $legaltext->title = $this->legaltexts[$id == 0]['title']; // Adjust index to match array index
+        $legaltext->content = $this->legaltexts[$id == 0]['content']; // Adjust index to match array index
         $legaltext->save();
 
         // Flash success message

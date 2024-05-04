@@ -7,11 +7,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Checkboxes') }}</div>
-                <div class="card-body">
+                
                     <!-- Renderizar el componente Livewire -->
                     <livewire:checkboxs />
-                </div>
             </div>
         </div>
     </div>

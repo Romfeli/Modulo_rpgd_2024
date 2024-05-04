@@ -90,7 +90,6 @@ public function saveData(Request $request)
     public function showFormulario()
     {
 
-
         $this->showForm2 = !$this->showForm2; // Invierte el valor de $showForm2
 
     }

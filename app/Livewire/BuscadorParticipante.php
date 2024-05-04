@@ -13,16 +13,7 @@ class BuscadorParticipante extends Component
     public function render()
     {
         // Determinar el campo por el cual buscar
-        $campoBusqueda = '';
-        if ($this->searchBy === 'dni') {
-            $campoBusqueda = 'dni';
-        } elseif ($this->searchBy === 'name_and_last_name') {
-            $campoBusqueda = 'name_and_last_name';
-        } elseif ($this->searchBy === 'email') {
-            $campoBusqueda = 'email';
-        } elseif ($this->searchBy === 'phone_number') {
-            $campoBusqueda = 'phone_number';
-        }
+        $campoBusqueda = $this->searchBy;
 
         // Realizar la búsqueda de participantes según el término de búsqueda y el campo seleccionado
         $participantes = Participante::where($campoBusqueda, 'like', '%'.$this->search.'%')->get();
