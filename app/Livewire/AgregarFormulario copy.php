@@ -30,8 +30,6 @@ class AgregarFormulario extends Component
             $this->validate();
             $this->successMessage = 'Los datos son válidos, ya puedes firmar y enviar';
         
-            $this->dispatch('hideSuccessMessage');
-
             return response()->json(['message' => $this->successMessage]);
         }
 
