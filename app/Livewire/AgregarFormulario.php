@@ -15,15 +15,21 @@ class AgregarFormulario extends Component
     public $successMessage= '';
     public $showForm2 = false;
     public $showForm = false;
- 
-
+    public $interest;
+    public $legal_text;
+    public $check1;
+    public $check2;
 
     protected $rules = [
         'dni' => 'required|digits:8',
         'name_and_last_name' => 'required|string|max:255',
         'email' => 'required|email|unique:participantes,email',
         'phone_number' => 'required|regex:/^\+?\d+$/',
-    ];
+        'check1' => 'accepted', // Debe estar presente y ser '1'
+        'check2' => 'accepted', // Debe estar presente y ser '1'
+        'interest' => 'nullable|string',
+
+];
 
     public function validarFormulario()
         {

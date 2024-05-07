@@ -69,6 +69,43 @@
                 <input type="text" id="phone_number" wire:model="phone_number" placeholder="Teléfono" value="{{ old('phone_number') }}" class="w-full border-gray-300 rounded-md py-2 px-3 mb-4 focus:outline-none focus:ring focus:border-blue-300">
                 @error('phone_number') <span class="text-red-500">{{ $message }}</span> @enderror
 
+              
+    <div class="mb-4">
+        <label class="flex items-center">
+            <input type="checkbox" id="check1" wire:model="check1" class="form-checkbox h-5 w-5 text-blue-600">
+            
+            <span class="ml-2 text-gray-700">Opción 1</span>
+
+        </label>
+        @error('check1') <span class="text-red-500">{{ $message }}</span> @enderror
+
+    </div>
+
+    <div class="mb-4">
+        <label class="flex items-center">
+            <input type="checkbox" id="check2" wire:model="check2" class="form-checkbox h-5 w-5 text-blue-600">
+            <span class="ml-2 text-gray-700">Opción 2</span>
+
+        </label>
+        @error('check2') <span class="text-red-500">{{ $message }}</span> @enderror
+
+    </div>
+
+    <label for="interest" class="block mb-2">Intereses</label>
+    <select id="interest" wire:model="interest" class="w-full border-gray-300 rounded-md py-2 px-3 mb-4 focus:outline-none focus:ring focus:border-blue-300">
+        <option value="" disabled selected>Selecciona una opción</option>
+        <option value="viajar">Viajar</option>
+        <option value="estudiar">Estudiar</option>
+        <option value="deporte">Deporte</option>
+    </select>
+    @error('interest') <span class="text-red-500">{{ $message }}</span> @enderror
+
+    <label for="legal_text" class="block mb-2">Texto Legal</label>
+    <textarea id="legal_text" wire:model="legal_text" placeholder="Ingrese el texto legal..." class="w-full border-gray-300 rounded-md py-2 px-3 mb-4 focus:outline-none focus:ring focus:border-blue-300"></textarea>
+    @error('legal_text') <span class="text-red-500">{{ $message }}</span> @enderror
+
+
+
                 <button type="button" wire:click="validarFormulario" class="w-full bg-green-500 text-white py-2 px-4 rounded-md mb-4">Validar Datos</button>
 
                 <button type="button" wire:click="saveData" onclick="showSignatureModal()" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md">Firmar y Enviar</button>
