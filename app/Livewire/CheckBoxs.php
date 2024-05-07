@@ -20,6 +20,9 @@ class CheckBoxs extends Component
         $this->checkboxs = Checkbox::all();
     }
 
+ 
+
+
     public function updateCheckboxs($id)
 {
     $this->validate();

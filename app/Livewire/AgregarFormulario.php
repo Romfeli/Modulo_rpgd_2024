@@ -1,9 +1,12 @@
 <?php
+
 namespace App\Livewire;
 
-use Livewire\Component;
+use App\Models\Checkbox;
+use App\Models\LegalText;
 use App\Models\Participante;
 use Illuminate\Http\Request;
+use Livewire\Component;
 
 class AgregarFormulario extends Component
 {
@@ -12,39 +15,36 @@ class AgregarFormulario extends Component
     public $email;
     public $phone_number;
     public $signatureBase64;
-    public $successMessage= '';
+    public $successMessage = '';
     public $showForm2 = false;
     public $showForm = false;
-    public $interest;
-    public $legal_text;
-    public $check1;
-    public $check2;
+    public $legalText;
+    public $firstCheckbox= false;
+    public $lastCheckbox= false;
 
     protected $rules = [
         'dni' => 'required|digits:8',
         'name_and_last_name' => 'required|string|max:255',
         'email' => 'required|email|unique:participantes,email',
         'phone_number' => 'required|regex:/^\+?\d+$/',
-        'check1' => 'accepted', // Debe estar presente y ser '1'
-        'check2' => 'accepted', // Debe estar presente y ser '1'
-        'interest' => 'nullable|string',
-
-];
+        'firstCheckbox' => 'required', // Regla de validación para firstCheckbox
+        'lastCheckbox' => 'required',  // Regla de validación para lastCheckbox
+       
+    ];
 
     public function validarFormulario()
-        {
-            $this->validate();
-            $this->successMessage = 'Los datos son válidos, ya puedes firmar y enviar';
-        
-            $this->dispatch('hideSuccessMessage');
-
-            return response()->json(['message' => $this->successMessage]);
-        }
-
-
-        public function validateDni()
     {
+        $this->validate();
 
+
+        $this->successMessage = 'Los datos son válidos, ya puedes firmar y enviar';
+        $this->dispatch('hideSuccessMessage');
+
+        return response()->json(['message' => $this->successMessage]);
+    }
+
+    public function validateDni()
+    {
         $this->validate([
             'dni' => 'required|digits:8',
         ]);
@@ -57,28 +57,15 @@ class AgregarFormulario extends Component
             $this->name_and_last_name = $participante->name_and_last_name;
             $this->email = $participante->email;
             $this->phone_number = $participante->phone_number;
-
         }
-
     }
 
-
-
-  
-        
     public function saveData(Request $request)
     {
         try {
-            
-            $request->validate([
-                'dni' => 'required|digits:8',
-                'name_and_last_name' => 'required|string|max:255',
-                'email' => 'required|email|unique:participantes,email',
-                'phone_number' => ['required', 'regex:/^\+?\d+$/'],
-                // Agrega más reglas de validación según sea necesario
-            ]);
-        
-        
+            $this->validate();
+           
+
             Participante::create([
                 'dni' => $request->dni,
                 'name_and_last_name' => $request->name_and_last_name,
@@ -90,16 +77,12 @@ class AgregarFormulario extends Component
             $this->showForm = false;
             $this->successMessage = 'Los datos se han guardado correctamente.';
 
-
             return response()->json(['message' => $this->successMessage]);
-    
         } catch (\Exception $e) {
-            // Manejar cualquier excepción y devolver una respuesta de error
             \Log::error('Error al procesar la solicitud POST: ' . $e->getMessage());
             return response()->json(['error' => 'Ocurrió un error interno en el servidor.'], 500);
         }
     }
-
 
     public function resetForm()
     {
@@ -110,18 +93,21 @@ class AgregarFormulario extends Component
         $this->showForm = false;
     }
 
-
-
     public function showFormulario()
     {
         $this->resetForm();
-        $this->showForm2 = !$this->showForm2; // Invierte el valor de $showForm2
-
+        $this->showForm2 = !$this->showForm2; // Invert the value of $showForm2
     }
-  
+
+    public function mount()
+    {
+        $this->firstCheckbox = Checkbox::first();
+        $this->lastCheckbox = Checkbox::latest()->first();
+        $this->legalText = LegalText::first();
+    }
+
     public function render()
     {
-        return view('livewire.agregar-formulario');
+        return view('livewire.agregar-formulario')->layout('layouts.app');
     }
-    
 }

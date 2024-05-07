@@ -65,31 +65,37 @@
                 <input type="email" id="email" wire:model="email" placeholder="Email" value="{{ old('Email') }}" class="w-full border-gray-300 rounded-md py-2 px-3 mb-4 focus:outline-none focus:ring focus:border-blue-300">
                 @error('email') <span class="text-red-500">{{ $message }}</span> @enderror
 
-                <label for="phone_number" class="block mb-2">Teléfono</label>
-                <input type="text" id="phone_number" wire:model="phone_number" placeholder="Teléfono" value="{{ old('phone_number') }}" class="w-full border-gray-300 rounded-md py-2 px-3 mb-4 focus:outline-none focus:ring focus:border-blue-300">
-                @error('phone_number') <span class="text-red-500">{{ $message }}</span> @enderror
+                <div>
+                    <label for="phone_number" class="block mb-2">Teléfono</label>
+                    <input type="text" id="phone_number" wire:model="phone_number" placeholder="Teléfono" class="w-full border-gray-300 rounded-md py-2 px-3 mb-4 focus:outline-none focus:ring focus:border-blue-300">
+                    @error('phone_number') <span class="text-red-500">{{ $message }}</span> @enderror
+                </div>
 
-              
-    <div class="mb-4">
-        <label class="flex items-center">
-            <input type="checkbox" id="check1" wire:model="check1" class="form-checkbox h-5 w-5 text-blue-600">
+
+
+                <div class="mb-4">
+                    <label for="legal_text" class="block mb-2">Texto Legal</label>
+                    <div class="border border-gray-300 rounded-md p-3 mb-4 focus:outline-none focus:ring focus:border-blue-300">
+                        {{ $legalText->content }}
+                    </div>
+                </div>            
             
-            <span class="ml-2 text-gray-700">Opción 1</span>
-
-        </label>
-        @error('check1') <span class="text-red-500">{{ $message }}</span> @enderror
-
-    </div>
-
-    <div class="mb-4">
-        <label class="flex items-center">
-            <input type="checkbox" id="check2" wire:model="check2" class="form-checkbox h-5 w-5 text-blue-600">
-            <span class="ml-2 text-gray-700">Opción 2</span>
-
-        </label>
-        @error('check2') <span class="text-red-500">{{ $message }}</span> @enderror
-
-    </div>
+              
+                <div class="mb-4">
+                    <label class="flex items-center">
+                        <input type="checkbox" id="check1" wire:model="firstCheckbox" class="form-checkbox h-5 w-5 text-blue-600" checked>
+                        <span class="ml-2 text-gray-700">{{ $firstCheckbox->content}}</span>
+                    </label>
+                    @error('firstCheckbox') <span class="text-red-500">{{ $message }}</span> @enderror
+                </div>
+                
+                <div class="mb-4">
+                    <label class="flex items-center">
+                        <input type="checkbox" id="check2" wire:model="lastCheckbox" class="form-checkbox h-5 w-5 text-blue-600" checked>
+                        <span class="ml-2 text-gray-700">{{ $lastCheckbox->content }}</span>
+                    </label>
+                    @error('lastCheckbox') <span class="text-red-500">{{ $message }}</span> @enderror
+                </div>
 
     <label for="interest" class="block mb-2">Intereses</label>
     <select id="interest" wire:model="interest" class="w-full border-gray-300 rounded-md py-2 px-3 mb-4 focus:outline-none focus:ring focus:border-blue-300">
@@ -98,13 +104,7 @@
         <option value="estudiar">Estudiar</option>
         <option value="deporte">Deporte</option>
     </select>
-    @error('interest') <span class="text-red-500">{{ $message }}</span> @enderror
-
-    <label for="legal_text" class="block mb-2">Texto Legal</label>
-    <textarea id="legal_text" wire:model="legal_text" placeholder="Ingrese el texto legal..." class="w-full border-gray-300 rounded-md py-2 px-3 mb-4 focus:outline-none focus:ring focus:border-blue-300"></textarea>
-    @error('legal_text') <span class="text-red-500">{{ $message }}</span> @enderror
-
-
+   
 
                 <button type="button" wire:click="validarFormulario" class="w-full bg-green-500 text-white py-2 px-4 rounded-md mb-4">Validar Datos</button>
 
@@ -135,7 +135,19 @@
 
 <script>
 
+document.addEventListener('livewire:load', function () {
+        const inputElement = document.querySelector("#phone_number");
+        const iti = window.intlTelInput(inputElement, {
+            initialCountry: 'auto',
+            separateDialCode: true,
+            utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js' // Necesario para el formato y validación del número
+        });
 
+        inputElement.addEventListener('change', function () {
+            const phoneNumber = iti.getNumber();
+            @this.set('phone_number', phoneNumber);
+        });
+    });
 
 
 function showMessage(esExitoso, mensaje) {

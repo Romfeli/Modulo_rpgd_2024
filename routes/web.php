@@ -63,6 +63,7 @@ Route::post('/guardar-datos', [AgregarFormulario::class, 'saveData']);
 Route::get('/agregar-formulario', [AgregarFormulario::class, 'render']);
 Route::post('/validate-dni', [AgregarFormulario::class, 'validateDni']);
 Route::post('/agregar-formulario', [AgregarFormulario::class, 'saveData']);
+Route::get('/send-check', [Checkboxs::class, 'send_check']);
 
 
 
