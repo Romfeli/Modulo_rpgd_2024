@@ -13,7 +13,7 @@ class Participante extends Model
     public $incrementing = false; // No utilizar la columna 'id'
     protected $table = 'participantes';
     // En el modelo Participante
-    protected $fillable = ['dni', 'name_and_last_name', 'email', 'phone_number', 'signatureBase64'];
+    protected $fillable = ['dni', 'name_and_last_name', 'email', 'phone_number', 'signatureBase64', 'firstCheckbox', 'lastCheckbox' ];
     protected $encryptable =  [
         //'nombre_y_apellido',
         //'email',

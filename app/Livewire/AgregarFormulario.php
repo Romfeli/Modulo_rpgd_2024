@@ -15,25 +15,47 @@ class AgregarFormulario extends Component
     public $email;
     public $phone_number;
     public $signatureBase64;
+    public $firstCheckbox= true;
+    public $lastCheckbox= true;
+    public $firstCheckboxChecked = false;
+    public $lastCheckboxChecked = false;
+    
     public $successMessage = '';
+
     public $showForm2 = false;
     public $showForm = false;
+
     public $legalText;
-    public $firstCheckbox= false;
-    public $lastCheckbox= false;
+    
 
     protected $rules = [
         'dni' => 'required|digits:8',
         'name_and_last_name' => 'required|string|max:255',
         'email' => 'required|email|unique:participantes,email',
         'phone_number' => 'required|regex:/^\+?\d+$/',
-        'firstCheckbox' => 'required', // Regla de validación para firstCheckbox
-        'lastCheckbox' => 'required',  // Regla de validación para lastCheckbox
-       
+        'firstCheckboxChecked' => 'accepted',
+        'lastCheckboxChecked' => 'accepted',
+        
     ];
+    
+    public function mount()
+{
+    $this->firstCheckbox = Checkbox::first(); 
+    $this->lastCheckbox = Checkbox::latest()->first();
+    $this->legalText = LegalText::first();
 
+
+
+   
+    
+}
+
+
+      
     public function validarFormulario()
     {
+        
+
         $this->validate();
 
 
@@ -60,29 +82,32 @@ class AgregarFormulario extends Component
         }
     }
 
-    public function saveData(Request $request)
+    public function saveData()
     {
         try {
-            $this->validate();
-           
-
-            Participante::create([
-                'dni' => $request->dni,
-                'name_and_last_name' => $request->name_and_last_name,
-                'email' => $request->email,
-                'phone_number' => $request->phone_number,
-                'signatureBase64' => $request->signatureBase64,
+            $participante = Participante::create([
+                'dni' => $this->dni,
+                'name_and_last_name' => $this->name_and_last_name,
+                'email' => $this->email,
+                'phone_number' => $this->phone_number,
+                'signatureBase64' => $this->signatureBase64,
+                'firstCheckbox' => $this->firstCheckboxChecked,
+                'lastCheckbox' => $this->lastCheckboxChecked,
             ]);
-
-            $this->showForm = false;
+    
+            // No es necesario llamar a $participante->save(), ya que ya se guardó con create()
+    
             $this->successMessage = 'Los datos se han guardado correctamente.';
-
-            return response()->json(['message' => $this->successMessage]);
         } catch (\Exception $e) {
             \Log::error('Error al procesar la solicitud POST: ' . $e->getMessage());
-            return response()->json(['error' => 'Ocurrió un error interno en el servidor.'], 500);
+            $this->successMessage = 'Hubo un error al guardar los datos.';
         }
     }
+
+    
+    
+
+
 
     public function resetForm()
     {
@@ -99,12 +124,7 @@ class AgregarFormulario extends Component
         $this->showForm2 = !$this->showForm2; // Invert the value of $showForm2
     }
 
-    public function mount()
-    {
-        $this->firstCheckbox = Checkbox::first();
-        $this->lastCheckbox = Checkbox::latest()->first();
-        $this->legalText = LegalText::first();
-    }
+   
 
     public function render()
     {

@@ -83,18 +83,18 @@
               
                 <div class="mb-4">
                     <label class="flex items-center">
-                        <input type="checkbox" id="check1" wire:model="firstCheckbox" class="form-checkbox h-5 w-5 text-blue-600" checked>
-                        <span class="ml-2 text-gray-700">{{ $firstCheckbox->content}}</span>
+                        <input type="checkbox" id="firstCheckboxChecked" wire:model="firstCheckboxChecked" class="form-checkbox h-5 w-5 text-blue-600">
+                        <span class="ml-2 text-gray-700">Checkbox 1</span>
                     </label>
-                    @error('firstCheckbox') <span class="text-red-500">{{ $message }}</span> @enderror
+                    @error('firstCheckboxChecked') <span class="text-red-500">{{ $message }}</span> @enderror
                 </div>
-                
+    
                 <div class="mb-4">
                     <label class="flex items-center">
-                        <input type="checkbox" id="check2" wire:model="lastCheckbox" class="form-checkbox h-5 w-5 text-blue-600" checked>
-                        <span class="ml-2 text-gray-700">{{ $lastCheckbox->content }}</span>
+                        <input type="checkbox" id="lastCheckboxChecked" wire:model="lastCheckboxChecked" class="form-checkbox h-5 w-5 text-blue-600">
+                        <span class="ml-2 text-gray-700">Checkbox 2</span>
                     </label>
-                    @error('lastCheckbox') <span class="text-red-500">{{ $message }}</span> @enderror
+                    @error('lastCheckboxChecked') <span class="text-red-500">{{ $message }}</span> @enderror
                 </div>
 
     <label for="interest" class="block mb-2">Intereses</label>
@@ -182,81 +182,96 @@ function showMessage(esExitoso, mensaje) {
     let haComenzadoDibujo = false;
 
     function showSignatureModal() {
-        const dni = document.getElementById('dni').value;
+    const dni = document.getElementById('dni').value;
 
-        Swal.fire({
-            title: 'Firma Digital',
-            html: '<canvas id="signatureCanvas" width="400" height="200"></canvas>',
-            showCancelButton: true,
-            confirmButtonText: 'CONFIRMAR',
-            didOpen: () => {
-                const canvas = document.getElementById('signatureCanvas');
-                signaturePad = new SignaturePad(canvas);
-                canvas.addEventListener("mousedown", evento => {
-                    haComenzadoDibujo = true;
-                });
-                canvas.addEventListener("mousemove", (evento) => {
-                    if (!haComenzadoDibujo) {
-                        return;
-                    }
-                    const x = evento.clientX - canvas.getBoundingClientRect().left;
-                    const y = evento.clientY - canvas.getBoundingClientRect().top;
-                    signaturePad.strokeMoveTo(x, y);
-                    signaturePad.stroke();
-                });
-                ["mouseup", "mouseout"].forEach(nombreDeEvento => {
-                    canvas.addEventListener(nombreDeEvento, () => {
-                        haComenzadoDibujo = false;
-                    });
-                });
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                handleSignatureAndShipping();
-            }
-        });
-    }
-
-    async function handleSignatureAndShipping() {
-        try {
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-            const formData = new FormData();
-            formData.append('dni', document.getElementById('dni').value);
-            formData.append('name_and_last_name', document.getElementById('name_and_last_name').value);
-            formData.append('email', document.getElementById('email').value);
-            formData.append('phone_number', document.getElementById('phone_number').value);
-            
+    Swal.fire({
+        title: 'Firma Digital',
+        html: '<canvas id="signatureCanvas" width="400" height="200"></canvas>',
+        showCancelButton: true,
+        confirmButtonText: 'CONFIRMAR',
+        didOpen: () => {
             const canvas = document.getElementById('signatureCanvas');
-            if (!canvas) {
-                throw new Error('No se encontró el elemento canvas de la firma.');
-            }
-        
-            const signatureBase64 = canvas.toDataURL();
-            formData.append('signatureBase64', signatureBase64);
-
-            const response = await fetch('/guardar-datos', {
-                method: 'post',
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                body: formData,
+            signaturePad = new SignaturePad(canvas);
+            canvas.addEventListener("mousedown", evento => {
+                haComenzadoDibujo = true;
             });
+            canvas.addEventListener("mousemove", (evento) => {
+                if (!haComenzadoDibujo) {
+                    return;
+                }
+                const x = evento.clientX - canvas.getBoundingClientRect().left;
+                const y = evento.clientY - canvas.getBoundingClientRect().top;
+                signaturePad.strokeMoveTo(x, y);
+                signaturePad.stroke();
+            });
+            ["mouseup", "mouseout"].forEach(nombreDeEvento => {
+                canvas.addEventListener(nombreDeEvento, () => {
+                    haComenzadoDibujo = false;
+                });
+            });
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            handleSignatureAndShipping(); // Mover la llamada aquí
+        }
+    });
+}
 
-            if (!response.ok) {
-                throw new Error('Error en la solicitud: ' + response.statusText);
-            }
+async function handleSignatureAndShipping() {
+    try {
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+        const formData = new FormData();
+        formData.append('dni', document.getElementById('dni').value);
+        formData.append('name_and_last_name', document.getElementById('name_and_last_name').value);
+        formData.append('email', document.getElementById('email').value);
+        formData.append('phone_number', document.getElementById('phone_number').value);
+        formData.append('firstCheckboxChecked', document.getElementById('firstCheckboxChecked').checked);
+        formData.append('lastCheckboxChecked', document.getElementById('lastCheckboxChecked').checked);
+        
+        const canvas = document.getElementById('signatureCanvas');
+        if (!canvas) {
+            throw new Error('No se encontró el elemento canvas de la firma.');
+        }
+        
+        const signatureBase64 = canvas.toDataURL();
+        formData.append('signatureBase64', signatureBase64);
 
+        const response = await fetch('/guardar-datos', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error('Error en la solicitud: ' + response.statusText);
+        }
+
+        // Log de la respuesta y el tipo de contenido de la respuesta
+        console.log('Tipo de contenido de la respuesta:', response.headers.get("content-type"));
+        const responseData = await response.text();
+        console.log('Respuesta del servidor:', responseData);
+
+        // Verificar si la respuesta está en formato JSON
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.indexOf("application/json") !== -1) {
             const data = await response.json();
-            console.log('Respuesta del servidor:', data);
+            console.log('Respuesta JSON del servidor:', data);
 
             // Mostrar mensaje de éxito
             showMessage(true, '¡Participante agregado exitosamente!');
-        } catch (error) {
-            console.error('Error al enviar el formulario:', error);
-            // Mostrar mensaje de error
-            showMessage(false, 'Hubo un error al procesar la solicitud.');
+        } else {
+            throw new Error('La respuesta no está en formato JSON');
         }
+    } catch (error) {
+        console.error('Error al enviar el formulario:', error);
+        // Mostrar mensaje de error
+        showMessage(false, 'Hubo un error al procesar la solicitud.');
     }
+}
+
+
 
     // Función para validar los datos del formulario
     async function validarFormulario() {

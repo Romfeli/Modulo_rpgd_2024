@@ -20,7 +20,9 @@ class FormularioControllerTest extends TestCase
                         'name_and_last_name' => 'John Doe',
                         'email' => 'john@example.com',
                         'phone_number' => '+123456789',
-                        'signatureBase64' => 'base64-encoded-signature'
+                        'signatureBase64' => 'base64-encoded-signature',
+                        'firstCheckbox' => true, // Cambiado a false
+                        'lastCheckbox' => true // Cambiado a false
                     ]);
 
                     $response->assertStatus(200)
@@ -34,7 +36,9 @@ class FormularioControllerTest extends TestCase
                         'name_and_last_name' => 'John Doe',
                         'email' => 'john@example.com',
                         'phone_number' => '+123456789',
-                        'signatureBase64' => 'base64-encoded-signature'
+                        'signatureBase64' => 'base64-encoded-signature',
+                        'firstCheckbox' => true,
+                        'lastCheckbox' => true
                     ]);
 
                     
