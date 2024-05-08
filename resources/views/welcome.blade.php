@@ -12,15 +12,15 @@
         <!-- Componente Agregar Formulario (inicialmente oculto) -->
         <div class="flex justify-center mb-4" wire:loading.remove>
             
-                <div class="w-1/2"> <!-- Ancho fijo del 50% del contenedor padre -->
+            <div class="w-full sm:w-3/4 md:w-1/2 lg:w-2/5 xl:w-1/3 bg-white rounded-lg  overflow-hidden">
                     <livewire:agregar-formulario />
                 </div>
            
         </div>
-        
         <!-- Contenedor para Lista de Participantes -->
-        <div class="flex justify-center space-x-4">
-            <div class="w-1/2">
+
+        <div class="flex justify-center my-4">
+            <div class="w-full sm:w-3/4 md:w-1/2 lg:w-2/5 xl:w-1/3 bg-white rounded-lg  overflow-hidden">
                 <livewire:lista-participantes />
             </div>
         </div>

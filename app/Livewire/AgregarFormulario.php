@@ -31,13 +31,12 @@ class AgregarFormulario extends Component
 
     protected $rules = [
         'dni' => 'required|digits:8',
-        'name_and_last_name' => 'required|string|max:255',
-        'email' => 'required|email|unique:participantes,email',
-        'phone_number' => 'required|regex:/^\+?\d+$/',
-        'firstCheckboxChecked' => 'accepted',
-        'lastCheckboxChecked' => 'accepted',
-        'signatureBase64' => 'required',
-
+        'name_and_last_name' => 'required|string|max:255|regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\-\s]+$/',
+        'email' => ['required', 'email', 'unique:participantes,email', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'],
+        'phone_number' => 'required|regex:/^\+?\d{6,9}$/',
+        'firstCheckboxChecked' => 'accepted|boolean|in:1,true',
+        'lastCheckboxChecked' => 'accepted|boolean|in:1,true',
+        'signatureBase64' => ['required', 'regex:/^data:image\/(png|jpg|jpeg);base64,/', 'string'],
     ];
     
     public function mount()

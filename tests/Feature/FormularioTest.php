@@ -13,32 +13,29 @@ use App\Livewire\AgregarFormulario;
 class FormularioTest extends TestCase
 {
     use RefreshDatabase;
-
-    /** @test */
-    public function formulario_se_completa_y_envia_correctamente()
-    {
-     
-
-        Livewire::test(AgregarFormulario::class)
+/** @test */
+public function formulario_se_completa_y_envia_correctamente()
+{
+    Livewire::test(AgregarFormulario::class)
         ->set('dni', '12345678')
-        ->set('name_and_last_name', 'Jane Doe')
+        ->set('name_and_last_name', 'Jane Doe') // Ajusta la regla para permitir espacios
         ->set('email', 'jane@example.com')
-        ->set('phone_number', '+1234567890')
-        ->set('signatureBase64', 'base64-encoded-signature')
-        ->set('firstCheckboxChecked', true)
-        ->set('lastCheckboxChecked', true)
-        ->call('saveData')
-        ->assertStatus(200);
+        ->set('phone_number', '+123456789') // Asegúrate de que cumpla con la regla de 6 a 9 dígitos
+        ->set('signatureBase64', 'data:image/png;base64,AAA...') // Usa un valor adecuado que cumpla con 'min:100'
+        ->set('firstCheckboxChecked', 1)
+        ->set('lastCheckboxChecked', 1)
+        ->call('saveData');
 
-      // Verificar que los datos se han guardado en la base de datos.
-      $this->assertDatabaseHas('participantes', [
+    // Verificar que los datos se han guardado en la base de datos.
+    $this->assertDatabaseHas('participantes', [
         'dni' => '12345678',
         'name_and_last_name' => 'Jane Doe',
         'email' => 'jane@example.com',
-        'phone_number' => '+1234567890',
-        'signatureBase64' => 'base64-encoded-signature',
+        'phone_number' => '+123456789',
+        'signatureBase64' => 'data:image/png;base64,AAA...',
         'firstCheckboxChecked' => 1,
         'lastCheckboxChecked' => 1
     ]);
-    }
+}
+
 }
