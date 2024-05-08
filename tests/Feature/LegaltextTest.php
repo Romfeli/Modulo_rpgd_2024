@@ -13,7 +13,7 @@ class LegaltextTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_updates_legal_text_successfully()
+    public function se_puede_actualizar_texto_legal()
     {
         // Crear un checkbox para actualizar
         $legaltext = LegalText::factory()->create([

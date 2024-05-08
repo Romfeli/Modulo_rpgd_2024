@@ -13,7 +13,7 @@ class CheckboxsTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_updates_checkbox_successfully()
+    public function se_puede_actualizar_checkbox()
     {
         // Crear un checkbox para actualizar
         $checkbox = Checkbox::factory()->create([
