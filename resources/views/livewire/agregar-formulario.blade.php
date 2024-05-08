@@ -81,11 +81,13 @@
 
 
     @error('signatureBase64') <span class="text-red-500">{{ $message }}</span> @enderror
-    <button type="button"  onclick="showSignatureModal()" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md">Firmar</button>
+    <button type="button" onclick="showSignatureModal()" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md">Firmar</button>
     <input type="hidden" id="signatureBase64" wire:model="signatureBase64">
 
-    <button type="button"  wire:click="saveData"  class="w-full bg-blue-500 text-white py-2 px-4 rounded-md">enviar</button>
-            </form>
+
+
+    <button type="button" wire:click="saveData" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md mt-4">Enviar</button>
+</form>
         </div>
     </div>
     @endif

@@ -38,12 +38,6 @@ class AgregarFormulario extends Component
         'lastCheckboxChecked' => 'accepted',
         'signatureBase64' => 'required',
 
-
-
-        
-
-
-        
     ];
     
     public function mount()
@@ -56,13 +50,8 @@ class AgregarFormulario extends Component
     $this->lastCheckboxChecked = true;
 
 
-   
-    
 }
 
-
-      
-  
 
     public function validateDni()
     {
@@ -119,6 +108,8 @@ class AgregarFormulario extends Component
         $this->name_and_last_name = '';
         $this->email = '';
         $this->phone_number = '';
+        $this->signatureBase64 = '';
+
         $this->showForm = false;
     }
 
