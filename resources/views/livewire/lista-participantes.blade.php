@@ -4,7 +4,9 @@
         <div class="flex justify-center mb-4">
             <button type="button" wire:click="toggleMostrarLista" 
             class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded w-full sm:w-auto transition-colors duration-200">
-                Ver participantes
+            <i class="fas fa-users mr-2"></i> 
+
+            Ver participantes
             </button>
         </div>
     

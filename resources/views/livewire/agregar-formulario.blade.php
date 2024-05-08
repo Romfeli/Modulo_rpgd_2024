@@ -4,9 +4,11 @@
   <!-- Botón "Agregar Participante" -->
   <div class="flex justify-center p-4">
     <button 
+    
       wire:click="showFormulario" 
       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto"
       >
+      <i class="fas fa-user-plus"></i>
       Agregar participante
     </button>
   </div>

@@ -28,10 +28,16 @@
                 <!-- Desktop menu -->
                 <div class="hidden sm:flex sm:items-center space-x-4">
                     @auth
+                    <x-nav-link href="/">
+                        <i class="fas fa-home"></i> <!-- Icono de casa -->
+
+                        {{ __('Inicio') }}
+                    </x-nav-link>
                         <!-- Mostrar opciones para usuarios autenticados -->  
                         <x-nav-link href="{{ route('dashboard') }}">
-                            <i class="fas fa-home"></i> <!-- Icono de casa -->
-                            {{ __('Home') }}
+                            <i class="fas fa-user"></i>
+
+                            {{ __('Dashboard') }}
                         </x-nav-link>
                         <x-nav-link href="{{ route('apariencia') }}">
                             <i class="fas fa-paint-brush"></i> <!-- Icono de paleta -->
@@ -58,10 +64,21 @@
                         </form>
                     @else
                         <!-- Mostrar opciones para usuarios no autenticados (guests) -->
+                        <x-nav-link href="">
+                            <!-- Icono de casa -->
+                            <i class="fas fa-home"></i>
+                            {{ __('Inicio') }}
+                        </x-nav-link>
+                        
                         <x-nav-link href="{{ route('login') }}">
+                            <!-- Icono de usuario -->
+                            <i class="fas fa-sign-in-alt"></i>
                             {{ __('Login') }}
                         </x-nav-link>
+                        
                         <x-nav-link href="{{ route('register') }}">
+                            <!-- Icono de registro -->
+                            <i class="fas fa-user-plus"></i>
                             {{ __('Register') }}
                         </x-nav-link>
                     @endauth
@@ -73,9 +90,10 @@
         <div x-show="open" class="sm:hidden">
             <div class="pt-2 pb-3 space-y-1">
                 <!-- Mostrar opciones para dispositivos móviles -->
-                <x-responsive-nav-link  href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                
+                <x-responsive-nav-link  href="/" :active="request()->routeIs('dashboard')">
                     <i class="fas fa-home"></i> <!-- Icono de casa -->
-                    {{ __('Dashboard') }}
+                    {{ __('Inicio') }}
                 </x-responsive-nav-link>
                 @guest
                     <x-responsive-nav-link href="{{ route('login') }}">
@@ -87,6 +105,10 @@
                         {{ __('Register') }}
                     </x-responsive-nav-link>
                 @else
+                <x-responsive-nav-link href="{{ route('dashboard') }}">
+                    <i class="fas fa-user"></i>  <!-- Icono de casilla de verificación -->
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
                     <x-responsive-nav-link href="{{ route('update-checkboxs') }}">
                         <i class="fas fa-check-square"></i>  <!-- Icono de casilla de verificación -->
                         {{ __('Checkboxes') }}
