@@ -97,10 +97,10 @@ class AgregarFormulario extends Component
 
        
         ]);
-        $this->successMessage = 'Datos guardados correctamente.';
+        $this->successMessage = 'Participante agregado correctamente!!';
         \Log::info('Dispatching data-saved event');
         $this->dispatch('data-saved'); // Make sure this is being called
-       
+        $this->resetForm();
 
     } catch (\Exception $e) {
         \Log::error('Error al guardar los datos: ' . $e->getMessage());
