@@ -120,35 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-document.addEventListener('DOMContentLoaded', function() {
-    function initIntlTelInput() {
-        const inputElement = document.getElementById('phone_number');
-        if (inputElement) {
-            if (inputElement._iti) {
-                inputElement._iti.destroy();
-            }
-            inputElement._iti = window.intlTelInput(inputElement, {
-                initialCountry: "auto",
-                separateDialCode: true,
-                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js",
-                customPlaceholder: function(selectedCountryPlaceholder, selectedCountryData) {
-                    return "ej. " + selectedCountryPlaceholder;
-                }
-            });
-        }
-    }
-
-    initIntlTelInput();
-
-    Livewire.hook('element.updated', (el, component) => {
-        if (el.id === 'phone_number') {
-            initIntlTelInput();
-        }
-    });
-});
-
-
-
     let signaturePad;
 
     window.showSignatureModal = function () {
@@ -163,6 +134,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 const signatureData = signaturePad.toDataURL();
                 document.getElementById('signatureBase64').value = signatureData;
                 @this.set('signatureBase64', signatureData); // Actualizar el valor en Livewire
+                
+                // Mostrar un mensaje de éxito
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: 'Firma guardada correctamente.',
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                });
+
                 return true;
             } else {
                 Swal.showValidationMessage("Por favor, proporciona una firma.");
@@ -175,6 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 };
+
 
 
 </script>

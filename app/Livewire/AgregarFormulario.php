@@ -115,7 +115,6 @@ class AgregarFormulario extends Component
 
     public function showFormulario()
     {
-        $this->resetForm();
         $this->showForm2 = !$this->showForm2; // Invert the value of $showForm2
     }
 
