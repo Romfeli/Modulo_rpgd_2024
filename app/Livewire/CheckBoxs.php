@@ -27,19 +27,22 @@ class CheckBoxs extends Component
 {
     $this->validate();
 
-    // Encuentra el checkbox por su ID
-    $checkbox = CheckBox::findOrFail($id);
+    // Find the checkbox in the loaded array that matches the given ID.
+    $checkbox = $this->checkboxs->firstWhere('id', $id);
 
-    // Actualiza el checkbox con los datos del formulario
-    // Utiliza el índice correcto basado en el ID proporcionado
-    $checkbox->title = $this->checkboxs[$id -1]['title'];
-    $checkbox->content = $this->checkboxs[$id -1 ]['content'];
-    $checkbox->save();
+    if ($checkbox) {
+        // Update the checkbox with the data from the form.
+        $checkbox->title = $checkbox['title'];
+        $checkbox->content = $checkbox['content'];
+        $checkbox->save();
 
-    session()->flash('success', 'Checkbox actualizado con éxito.');
+        session()->flash('success', 'Checkbox actualizado con éxito.');
 
-    // Emitir un evento de actualización después de la actualización
-    $this->dispatch('checkboxUpdated');
+        // Emit an update event after the update
+        $this->dispatch('checkboxUpdated');
+    } else {
+        session()->flash('error', 'Checkbox no encontrado.');
+    }
 }
 
     public function render()
