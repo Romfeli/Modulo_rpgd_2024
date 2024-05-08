@@ -1,4 +1,9 @@
 <div x-data="{ open: false }">
+    <style>
+        i{
+            margin-right: 4px;"
+        }
+    </style>
     <nav class="bg-white border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
@@ -24,19 +29,41 @@
                 <div class="hidden sm:flex sm:items-center space-x-4">
                     @auth
                         <!-- Mostrar opciones para usuarios autenticados -->  
-                        <x-nav-link href="{{ route('dashboard') }}">{{ __('Home') }}</x-nav-link>
-                        <x-nav-link href="{{ route('apariencia') }}">{{ __('Apariencia') }}</x-nav-link>
-                        <x-nav-link href="{{ route('update-legal-text') }}">{{ __('Texto legal') }}</x-nav-link>
-                        <x-nav-link href="{{ route('update-checkboxs') }}">{{ __('Checkboxes') }}</x-nav-link>
-                        <x-nav-link href="{{ route('buscador') }}">{{ __('Buscador') }}</x-nav-link>
+                        <x-nav-link href="{{ route('dashboard') }}">
+                            <i class="fas fa-home"></i> <!-- Icono de casa -->
+                            {{ __('Home') }}
+                        </x-nav-link>
+                        <x-nav-link href="{{ route('apariencia') }}">
+                            <i class="fas fa-paint-brush"></i> <!-- Icono de paleta -->
+                            {{ __('Apariencia') }}
+                        </x-nav-link>
+                        <x-nav-link href="{{ route('update-legal-text') }}">
+                            <i class="fas fa-file-alt"></i> <!-- Icono de documento -->
+                            {{ __('Texto legal') }}
+                        </x-nav-link>
+                        <x-nav-link href="{{ route('update-checkboxs') }}">
+                            <i class="fas fa-check-square"></i> <!-- Icono de casilla de verificación -->
+                            {{ __('Checkboxes') }}
+                        </x-nav-link>
+                        <x-nav-link href="{{ route('buscador') }}">
+                            <i class="fas fa-search"></i> <!-- Icono de búsqueda -->
+                            {{ __('Buscador') }}
+                        </x-nav-link>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <x-nav-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">{{ __('Logout') }}</x-nav-link>
+                            <x-nav-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
+                                <i class="fas fa-sign-out-alt"></i> <!-- Icono de salida -->
+                                {{ __('Logout') }}
+                            </x-nav-link>
                         </form>
                     @else
                         <!-- Mostrar opciones para usuarios no autenticados (guests) -->
-                        <x-nav-link href="{{ route('login') }}">{{ __('Login') }}</x-nav-link>
-                        <x-nav-link href="{{ route('register') }}">{{ __('Register') }}</x-nav-link>
+                        <x-nav-link href="{{ route('login') }}">
+                            {{ __('Login') }}
+                        </x-nav-link>
+                        <x-nav-link href="{{ route('register') }}">
+                            {{ __('Register') }}
+                        </x-nav-link>
                     @endauth
                 </div>
             </div>
@@ -46,17 +73,42 @@
         <div x-show="open" class="sm:hidden">
             <div class="pt-2 pb-3 space-y-1">
                 <!-- Mostrar opciones para dispositivos móviles -->
-                <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">{{ __('Dashboard') }}</x-responsive-nav-link>
+                <x-responsive-nav-link  href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                    <i class="fas fa-home"></i> <!-- Icono de casa -->
+                    {{ __('Dashboard') }}
+                </x-responsive-nav-link>
                 @guest
-                    <x-responsive-nav-link href="{{ route('login') }}">{{ __('Login') }}</x-responsive-nav-link>
-                    <x-responsive-nav-link href="{{ route('register') }}">{{ __('Register') }}</x-responsive-nav-link>
+                    <x-responsive-nav-link href="{{ route('login') }}">
+                        <i class="fas fa-sign-in-alt" ></i> <!-- Icono de entrada -->
+                        {{ __('Login') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link href="{{ route('register') }}">
+                        <i class="fas fa-user-plus"></i> <!-- Icono de registro -->
+                        {{ __('Register') }}
+                    </x-responsive-nav-link>
                 @else
-                    <x-responsive-nav-link href="{{ route('update-checkboxs') }}">{{ __('Checkboxes') }}</x-responsive-nav-link>
-                    <x-responsive-nav-link href="{{ route('update-legal-text') }}">{{ __('Texto legal') }}</x-responsive-nav-link>
-                    <x-responsive-nav-link href="{{ route('apariencia') }}">{{ __('Apariencia') }}</x-responsive-nav-link>
+                    <x-responsive-nav-link href="{{ route('update-checkboxs') }}">
+                        <i class="fas fa-check-square"></i>  <!-- Icono de casilla de verificación -->
+                        {{ __('Checkboxes') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link href="{{ route('update-legal-text') }}">
+                        <i class="fas fa-file-alt"></i> <!-- Icono de documento -->
+                        {{ __('Texto legal') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link href="{{ route('apariencia') }}">
+                        <i class="fas fa-paint-brush"></i> <!-- Icono de paleta -->
+                        {{ __('Apariencia') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link href="{{ route('buscador') }}">
+                        <i class="fas fa-search"></i> <!-- Icono de búsqueda -->
+                        {{ __('Buscador') }}
+                    </x-responsive-nav-link>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <x-nav-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">{{ __('Logout') }}</x-nav-link>
+                        <x-nav-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
+                            <i class="fas fa-sign-out-alt"></i> <!-- Icono de salida -->
+                            {{ __('Logout') }}
+                        </x-nav-link>
                     </form>
                 @endguest
             </div>

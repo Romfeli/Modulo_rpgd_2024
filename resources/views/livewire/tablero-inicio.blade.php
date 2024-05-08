@@ -9,7 +9,7 @@
 
             <div class="text-right">
                 <p class="text-lg font-bold">Español</p>
-                <p class="text-lg font-bold">88888888</p>
+                
 
             </div>
         </div>

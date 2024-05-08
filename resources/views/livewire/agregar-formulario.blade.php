@@ -1,5 +1,5 @@
-<div>
-<!-- Botón "Ver Participante" -->
+<div class="container mx-auto p-4">
+    <!-- Botón "Ver Participante" -->
     <div class="flex justify-center mb-4">
         <button 
             wire:click="showFormulario" 
@@ -9,6 +9,7 @@
         </button>
     </div>
 
+    <!-- Formulario para mostrar el DNI -->
     @if ($showForm2)
     <div class="flex justify-center items-center ">
         <div  class="w-96 bg-white p-8 rounded-lg shadow-md">
@@ -24,6 +25,7 @@
     </div>
     @endif
 
+    <!-- Formulario principal -->
     @if ($showForm)
     <div class="flex justify-center items-center ">
         <div  class="w-96 bg-white p-8 rounded-lg shadow-md">
@@ -44,8 +46,6 @@
                     @error('phone_number') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
 
-
-
                 <div class="mb-4">
                     <label for="legal_text" class="block mb-2">Texto Legal</label>
                     <div class="border border-gray-300 rounded-md p-3 mb-4 focus:outline-none focus:ring focus:border-blue-300">
@@ -53,7 +53,6 @@
                     </div>
                 </div>            
             
-              
                 <div class="mb-4">
                     <label class="flex items-center">
                         <input type="checkbox" id="firstCheckboxChecked" wire:model="firstCheckboxChecked" class="form-checkbox h-5 w-5 text-blue-600">
@@ -70,30 +69,25 @@
                     @error('lastCheckboxChecked') <span class="text-red-500">{{ $message }}</span> @enderror
                 </div>
 
-    <label for="interest" class="block mb-2">Intereses</label>
-    <select id="interest" wire:model="interest" class="w-full border-gray-300 rounded-md py-2 px-3 mb-4 focus:outline-none focus:ring focus:border-blue-300">
-        <option value="" disabled selected>Selecciona una opción</option>
-        <option value="viajar">Viajar</option>
-        <option value="estudiar">Estudiar</option>
-        <option value="deporte">Deporte</option>
-    </select>
+                <label for="interest" class="block mb-2">Intereses</label>
+                <select id="interest" wire:model="interest" class="w-full border-gray-300 rounded-md py-2 px-3 mb-4 focus:outline-none focus:ring focus:border-blue-300">
+                    <option value="" disabled selected>Selecciona una opción</option>
+                    <option value="viajar">Viajar</option>
+                    <option value="estudiar">Estudiar</option>
+                    <option value="deporte">Deporte</option>
+                </select>
 
+                @error('signatureBase64') <span class="text-red-500">{{ $message }}</span> @enderror
+                <button type="button" onclick="showSignatureModal()" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md">Firmar</button>
+                <input type="hidden" id="signatureBase64" wire:model="signatureBase64">
 
-
-    @error('signatureBase64') <span class="text-red-500">{{ $message }}</span> @enderror
-    <button type="button" onclick="showSignatureModal()" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md">Firmar</button>
-    <input type="hidden" id="signatureBase64" wire:model="signatureBase64">
-
-
-
-    <button type="button" wire:click="saveData" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md mt-4">Enviar</button>
-</form>
+                <button type="button" wire:click="saveData" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md mt-4">Enviar</button>
+            </form>
         </div>
     </div>
     @endif
 
     <!-- Mensaje de respuesta -->
-
     @if($successMessage)
     <div  class="flex justify-center items-center mt-4">
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative w-96" role="alert">
@@ -102,9 +96,8 @@
         </div>
     </div>
     @else
-<p>  </p>
-
-@endif
+    <p>  </p>
+    @endif
 </div>
 
 

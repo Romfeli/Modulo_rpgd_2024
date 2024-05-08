@@ -1,4 +1,6 @@
 <x-guest-layout>
+    @include('navigation-menu')
+
     <x-authentication-card>
         <x-slot name="logo">
             <x-authentication-card-logo />
