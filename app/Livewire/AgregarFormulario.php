@@ -84,12 +84,10 @@ class AgregarFormulario extends Component
             'firstCheckboxChecked' => $this->firstCheckboxChecked,
             'lastCheckboxChecked' => $this->lastCheckboxChecked,
 
-       
         ]);
         $this->successMessage = 'Participante agregado correctamente!!';
-        \Log::info('Dispatching data-saved event');
-        $this->dispatch('data-saved'); // Make sure this is being called
         $this->resetForm();
+        $this->dispatch('hide-success-message'); // Disparar evento para ocultar el mensaje
 
     } catch (\Exception $e) {
         \Log::error('Error al guardar los datos: ' . $e->getMessage());
@@ -109,8 +107,10 @@ class AgregarFormulario extends Component
         $this->email = '';
         $this->phone_number = '';
         $this->signatureBase64 = '';
-
         $this->showForm = false;
+        $this->showForm2 = false;
+
+
     }
 
     public function showFormulario()

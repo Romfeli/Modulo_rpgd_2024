@@ -27,15 +27,4 @@
     </main>
 @endsection
 
-@push('scripts')
-<script>
-    document.addEventListener('livewire:load', function () {
-        Livewire.on('showFormulario', () => {
-            const formulario = document.querySelector('.w-1/2');
-            if (formulario) {
-                formulario.classList.remove('hidden');
-            }
-        });
-    });
-</script>
-@endpush
+

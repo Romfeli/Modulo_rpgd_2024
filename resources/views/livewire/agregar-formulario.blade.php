@@ -38,10 +38,10 @@
                 <input type="email" id="email" wire:model="email" placeholder="Email" value="{{ old('Email') }}" class="w-full border-gray-300 rounded-md py-2 px-3 mb-4 focus:outline-none focus:ring focus:border-blue-300">
                 @error('email') <span class="text-red-500">{{ $message }}</span> @enderror
 
-                <div>
-                    <label for="phone_number" class="block mb-2">Teléfono</label>
-                    <input type="text" id="phone_number"value="{{ old('phone_number') }}" wire:model="phone_number" placeholder="Teléfono" class="w-full border-gray-300 rounded-md py-2 px-3 mb-4 focus:outline-none focus:ring focus:border-blue-300">
-                    @error('phone_number') <span class="text-red-500">{{ $message }}</span> @enderror
+                <div class="mb-4">
+                    <label for="phone_number" class="block mb-2 text-sm font-medium text-gray-700">Teléfono</label>
+                    <input type="text" id="phone_number" wire:model.lazy="phone_number" placeholder="Teléfono" class="w-full border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-blue-300 focus:border-blue-300">
+                    @error('phone_number') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
 
 
@@ -94,9 +94,6 @@
 
     <!-- Mensaje de respuesta -->
 
-<div id="mensajeRespuesta" style="display: none; background-color: green; color: white; border: 1px solid darkgreen; padding: 10px;">
-</div>
-
     @if($successMessage)
     <div  class="flex justify-center items-center mt-4">
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative w-96" role="alert">
@@ -113,31 +110,44 @@
 
 <script>
 
-document.addEventListener('livewire:load', function () {
-    window.addEventListener('data-saved', function () {
-        console.log('data-saved event caught, preparing to reload');
-        alert('Datos guardados correctamente.');
-        setTimeout(function () {
-            window.location.reload();
-        }, 2000);
+document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('hide-success-message', event => {
+        setTimeout(() => {
+            @this.set('successMessage', '');
+        }, 3000);  // Ocultar mensaje después de 3 segundos
     });
 });
 
 
 
-document.addEventListener('livewire:load', function () {
-        const inputElement = document.querySelector("#phone_number");
-        const iti = window.intlTelInput(inputElement, {
-            initialCountry: 'auto',
-            separateDialCode: true,
-            utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js' // Necesario para el formato y validación del número
-        });
+document.addEventListener('DOMContentLoaded', function() {
+    function initIntlTelInput() {
+        const inputElement = document.getElementById('phone_number');
+        if (inputElement) {
+            if (inputElement._iti) {
+                inputElement._iti.destroy();
+            }
+            inputElement._iti = window.intlTelInput(inputElement, {
+                initialCountry: "auto",
+                separateDialCode: true,
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js",
+                customPlaceholder: function(selectedCountryPlaceholder, selectedCountryData) {
+                    return "ej. " + selectedCountryPlaceholder;
+                }
+            });
+        }
+    }
 
-        inputElement.addEventListener('change', function () {
-            const phoneNumber = iti.getNumber();
-            @this.set('phone_number', phoneNumber);
-        });
+    initIntlTelInput();
+
+    Livewire.hook('element.updated', (el, component) => {
+        if (el.id === 'phone_number') {
+            initIntlTelInput();
+        }
     });
+});
+
+
 
     let signaturePad;
 
@@ -167,6 +177,5 @@ document.addEventListener('livewire:load', function () {
 };
 
 
-   
 </script>
 
