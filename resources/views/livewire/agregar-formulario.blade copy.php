@@ -1,5 +1,32 @@
+
+
 <div>
-<!-- Botón "Ver Participante" -->
+
+    <style>
+        /* Estilos para el mensaje de éxito */
+     #mensajeRespuesta {
+    display: none;
+    position: fixed;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    background-color: #F87171; /* Color rojo suave */
+    color: #ffffff; /* Texto blanco */
+    border: 1px solid #EF4444; /* Borde rojo oscuro */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+}
+
+    
+        /* Estilos para el mensaje de éxito */
+        #mensajeRespuesta strong {
+            font-weight: bold;
+        }
+    </style>
+    
+    <!-- Botón "Ver Participante" -->
     <div class="flex justify-center mb-4">
         <button 
             wire:click="showFormulario" 
@@ -40,7 +67,7 @@
 
                 <div>
                     <label for="phone_number" class="block mb-2">Teléfono</label>
-                    <input type="text" id="phone_number"value="{{ old('phone_number') }}" wire:model="phone_number" placeholder="Teléfono" class="w-full border-gray-300 rounded-md py-2 px-3 mb-4 focus:outline-none focus:ring focus:border-blue-300">
+                    <input type="text" id="phone_number" wire:model="phone_number" placeholder="Teléfono" class="w-full border-gray-300 rounded-md py-2 px-3 mb-4 focus:outline-none focus:ring focus:border-blue-300">
                     @error('phone_number') <span class="text-red-500">{{ $message }}</span> @enderror
                 </div>
 
@@ -57,7 +84,7 @@
                 <div class="mb-4">
                     <label class="flex items-center">
                         <input type="checkbox" id="firstCheckboxChecked" wire:model="firstCheckboxChecked" class="form-checkbox h-5 w-5 text-blue-600">
-                        <span class="ml-2 text-gray-700">{{$firstCheckbox->content}}</span>
+                        <span class="ml-2 text-gray-700">Checkbox 1</span>
                     </label>
                     @error('firstCheckboxChecked') <span class="text-red-500">{{ $message }}</span> @enderror
                 </div>
@@ -65,7 +92,7 @@
                 <div class="mb-4">
                     <label class="flex items-center">
                         <input type="checkbox" id="lastCheckboxChecked" wire:model="lastCheckboxChecked" class="form-checkbox h-5 w-5 text-blue-600">
-                        <span class="ml-2 text-gray-700">{{$lastCheckbox->content}}</span>
+                        <span class="ml-2 text-gray-700">Checkbox 2</span>
                     </label>
                     @error('lastCheckboxChecked') <span class="text-red-500">{{ $message }}</span> @enderror
                 </div>
@@ -77,14 +104,16 @@
         <option value="estudiar">Estudiar</option>
         <option value="deporte">Deporte</option>
     </select>
-
-
-
-    @error('signatureBase64') <span class="text-red-500">{{ $message }}</span> @enderror
-    <button type="button"  onclick="showSignatureModal()" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md">Firmar</button>
+   
     <input type="hidden" id="signatureBase64" wire:model="signatureBase64">
 
+                
+    <button type="button" wire:click="validarFormulario" class="w-full bg-green-500 text-white py-2 px-4 rounded-md mb-4">Validar Datos</button>
+
+    <button type="button"  onclick="showSignatureModal()" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md">Firmar</button>
+
     <button type="button"  wire:click="saveData"  class="w-full bg-blue-500 text-white py-2 px-4 rounded-md">enviar</button>
+
             </form>
         </div>
     </div>
@@ -112,18 +141,6 @@
 <script>
 
 document.addEventListener('livewire:load', function () {
-    window.addEventListener('data-saved', function () {
-        console.log('data-saved event caught, preparing to reload');
-        alert('Datos guardados correctamente.');
-        setTimeout(function () {
-            window.location.reload();
-        }, 2000);
-    });
-});
-
-
-
-document.addEventListener('livewire:load', function () {
         const inputElement = document.querySelector("#phone_number");
         const iti = window.intlTelInput(inputElement, {
             initialCountry: 'auto',
@@ -136,6 +153,35 @@ document.addEventListener('livewire:load', function () {
             @this.set('phone_number', phoneNumber);
         });
     });
+
+
+function showMessage(esExitoso, mensaje) {
+    const mensajeElemento = document.getElementById('mensajeRespuesta');
+
+    if (esExitoso) {
+        mensajeElemento.style.backgroundColor = '#34D399'; // Color verde suave
+        mensajeElemento.style.borderColor = '#059669'; // Borde verde oscuro
+        mensajeElemento.style.color = '#ffffff'; // Texto blanco
+        mensajeElemento.innerHTML = mensaje; // Establecer el mensaje
+    mensajeElemento.style.display = 'block'; // Mostrar el mensaje
+        setTimeout(function() {
+            location.reload(true); // Recargar la página después de 2 segundos
+        }, 2000); // 2000 milisegundos = 2 segundos
+    } else {
+        mensajeElemento.innerHTML = mensaje; // Establecer el mensaje
+         mensajeElemento.style.display = 'block'; // Mostrar el mensaje
+        mensajeElemento.style.backgroundColor = '#F87171'; // Color rojo suave
+        mensajeElemento.style.borderColor = '#EF4444'; // Borde rojo oscuro
+        mensajeElemento.style.color = '#ffffff'; // Texto blanco
+        setTimeout(function() {
+        mensajeElemento.style.display = 'none'; // Ocultar el mensaje después de un tiempo
+    }, 2000); // 2000 milisegundos = 2 segundos
+    }
+
+  
+
+   
+}
 
     let signaturePad;
 

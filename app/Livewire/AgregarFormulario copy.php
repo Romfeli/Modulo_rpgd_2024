@@ -36,9 +36,6 @@ class AgregarFormulario extends Component
         'phone_number' => 'required|regex:/^\+?\d+$/',
         'firstCheckboxChecked' => 'accepted',
         'lastCheckboxChecked' => 'accepted',
-        'signatureBase64' => 'required',
-
-
 
         
 
@@ -62,7 +59,18 @@ class AgregarFormulario extends Component
 
 
       
-  
+    public function validarFormulario()
+    {
+        
+
+        $this->validate();
+
+
+        $this->successMessage = 'Los datos son válidos, ya puedes firmar y enviar';
+        $this->dispatch('hideSuccessMessage');
+
+        return response()->json(['message' => $this->successMessage]);
+    }
 
     public function validateDni()
     {
@@ -97,15 +105,12 @@ class AgregarFormulario extends Component
 
        
         ]);
+    
         $this->successMessage = 'Datos guardados correctamente.';
-        \Log::info('Dispatching data-saved event');
-        $this->dispatch('data-saved'); // Make sure this is being called
-       
-
+        $this->dispatch('closeModal'); // Cerrar modal después de guardar
     } catch (\Exception $e) {
         \Log::error('Error al guardar los datos: ' . $e->getMessage());
-        $this->addError('saveError', 'Error al guardar los datos.'); // Use Livewire's error handling
-        $this->dispatch('data-save-failed');
+        $this->dispatch('errorMessage', ['message' => 'Error al guardar los datos.']);
     }
 }
 

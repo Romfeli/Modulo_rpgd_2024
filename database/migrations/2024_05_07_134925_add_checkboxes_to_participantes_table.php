@@ -14,8 +14,8 @@ class AddCheckboxesToParticipantesTable extends Migration
     public function up()
     {
         Schema::table('participantes', function (Blueprint $table) {
-            $table->boolean('checkbox1')->default(false);
-            $table->boolean('checkbox2')->default(false);
+            $table->boolean('firstCheckboxChecked')->default(false);
+            $table->boolean('lastCheckboxChecked')->default(false);
         });
     }
 
@@ -27,8 +27,8 @@ class AddCheckboxesToParticipantesTable extends Migration
     public function down()
     {
         Schema::table('participantes', function (Blueprint $table) {
-            $table->dropColumn('checkbox1');
-            $table->dropColumn('checkbox2');
+            $table->dropColumn('firstCheckboxChecked');
+            $table->dropColumn('lastCheckboxChecked');
         });
     }
 }
